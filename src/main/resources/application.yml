@@ -1,0 +1,23 @@
+spring:
+  cloud.stream:
+    bindings:
+      orderCreated-out-0:
+        destination: ProductOrders
+      processOrder-in-0:
+        destination: ProductOrders
+    kafka.streams.broker:
+      configuration:
+        commit.interval.ms: 1000
+        default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        default.value.serde: org.springframework.kafka.support.serializer.JsonSerde
+        spring.json.trusted.packages: '*'
+        spring.json.value.default.type: com.poc.kafka.orderanalytics.events.OrderEvent
+      brokers: localhost:9092
+      serdeError: logAndContinue
+
+  kafka:
+    bootstrap-servers: localhost:9092
+
+logging:
+  level:
+    web: TRACE
